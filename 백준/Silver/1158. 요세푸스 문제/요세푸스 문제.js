@@ -49,6 +49,18 @@ class Deque {
         return val;
     }
 
+    moveRight() {
+        const start = this.start;
+        
+        this.start = this.start.next;
+        this.start.prev = null;
+        start.next = null;
+        
+        start.prev = this.end;
+        this.end.next = start;
+        this.end = start
+    }
+
     isEmpty() {
         return this.size === 0;
     }
@@ -68,14 +80,17 @@ Array.from({length: N}, (_, i) => i + 1).forEach((p) => {
 const res = [];
 let c = 1;
 
-while (!queue.isEmpty()) {
-    const person = queue.popLeft();
+while (true) {
+    if (queue.size === 1) {
+        res.push(queue.popLeft());
+        break;
+    }
 
     if (c % K !== 0) {
-        queue.append(person);
+        queue.moveRight();
         c++;
     } else {
-        res.push(person);
+        res.push(queue.popLeft());
         c = 1;
     }
 }
