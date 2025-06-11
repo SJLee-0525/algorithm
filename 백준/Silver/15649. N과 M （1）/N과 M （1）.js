@@ -1,17 +1,13 @@
 const makePerm = (N, M) => {
-    const perms = new Set();
+    const perms = [];
     const path = [];
     const used = Array(N + 1).fill(false);
 
-    function func(lv, len) {
-        if (lv === N) {
-            if (len === M) perms.add(path.join(' '));
+    function func(len) {
+        if (len === M) {
+            perms.push(path.join(' '));
             return;
         }
-
-        if (len > M) return;
-
-        func(lv + 1, len);
         
         for (let i = 1; i < N + 1; i++) {
             if (used[i]) continue;
@@ -19,16 +15,16 @@ const makePerm = (N, M) => {
             used[i] = true;
             path.push(i);
             
-            func(lv + 1, len + 1);
+            func(len + 1);
             
             used[i] = false;
             path.pop();
         }
     }
 
-    func(0, 0, N);
+    func(0);
 
-    return Array.from(perms).sort();
+    return perms;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
