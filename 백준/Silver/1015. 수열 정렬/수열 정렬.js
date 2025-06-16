@@ -17,7 +17,7 @@ for (let c = 0; c < 1000; c++) {
 const res = Array(N).fill(0);
 
 for (let i = N - 1; i > -1; i--) {
-    res[i] = --count[arr[i]]
+    res[i] = --count[arr[i]];
 }
 
-console.log(res.join(' '))
+console.log(res.join(' '));
