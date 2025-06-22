@@ -2,25 +2,23 @@ const fs = require('fs');
 const input = fs.readFileSync('dev/stdin').toString().trim().split('\n');
 
 const N = Number(input[0]);
-const CARDS = {};
+const CARDS = new Map();
 
-for (let n = 1; n < N + 1; n++) {
-    const card = input[n];
-
-    if (!CARDS[card]) {
-        CARDS[card] = 1;
-    } else {
-        CARDS[card]++;
-    }
+for (let i = 1; i <= N; i++) {
+    const card = input[i];
+    CARDS.set(card, (CARDS.get(card) || 0) + 1);
 }
 
-const res = Object.entries(CARDS).sort((a, b) => {
-    const diff = b[1] - a[1];
-    if (diff !== 0) return diff;
+const result = [...CARDS.entries()].sort((a, b) => {
+    const countA = a[1];
+    const countB = b[1];
+    if (countA !== countB) {
+        return countB - countA; 
+    }
 
     const bigA = BigInt(a[0]);
     const bigB = BigInt(b[0]);
-    return bigA < bigB ? -1 : bigA > bigB ? 1 : 0;
-})
+    return bigA < bigB ? -1 : bigA > bigB ? 1 : 0; 
+});
 
-console.log(res[0][0]);
+console.log(result[0][0]);
