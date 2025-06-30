@@ -64,26 +64,24 @@ const solution = (input) => {
     const [N, M] = input[0].split(' ').map(Number);
     const ocean = [Array(M + 2).fill(-1), ...input.slice(1, N + 1).map((elem) => [-1, ...elem.split(' ').map(Number), -1]), Array(M + 2).fill(-1)];
 
-    let res = 0;
+    const visited = Array.from({ length: N + 2 }, () => Array(M + 2).fill(-1));
+    const queue = new Deque();
+
     for (let i = 1; i < N + 1; i++) {
         for (let j = 1; j < M + 1; j++) {
-            if (ocean[i][j] === 1) continue;
-
-            const dist = bfs(i, j, N + 2, M + 2, ocean);
-            if (res < dist) res = dist;
+            if (ocean[i][j] === 1) { 
+                visited[i][j] = 0;
+                queue.append([i, j]);
+            }
         }
     }
 
-    console.log(res);
+    bfs(ocean, visited, queue);
+
+    console.log(Math.max(...visited.flat()));   
 } 
 
-const bfs = (si, sj, N, M, ocean) => {
-    const visited = Array.from({ length: N }, () => Array(M).fill(0));
-    visited[si][sj] = 1;
-
-    const queue = new Deque();
-    queue.append([si, sj]);
-
+const bfs = (ocean, visited, queue) => {
     while (!queue.isEmpty()) {
         const [i, j] = queue.popleft();
 
@@ -91,18 +89,14 @@ const bfs = (si, sj, N, M, ocean) => {
             const mi = i + DI[k];
             const mj = j + DJ[k];
 
-            if (ocean[mi][mj] < 0 || visited[mi][mj] > 0) continue;
+            if (ocean[mi][mj] < 0 || visited[mi][mj] > -1) continue;
 
-            if (ocean[mi][mj] === 1) {
-                return visited[i][j];
-            } else {
-                visited[mi][mj] = visited[i][j] + 1;
-                queue.append([mi, mj]);
-            }
+            visited[mi][mj] = visited[i][j] + 1;
+            queue.append([mi, mj]);
         }
     }
 
-    return 0;
+    return null;
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
