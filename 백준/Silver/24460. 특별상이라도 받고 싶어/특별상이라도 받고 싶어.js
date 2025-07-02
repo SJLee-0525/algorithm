@@ -16,15 +16,12 @@ const f = (arr, si, ei, sj, ej) => {
     const mi = Math.floor((si + ei) / 2);
     const mj = Math.floor((sj + ej) / 2);
 
-    const temp = [
+    return [
         f(arr, si, mi, sj, mj), 
         f(arr, mi + 1, ei, sj, mj), 
         f(arr, si, mi, mj + 1, ej), 
         f(arr, mi + 1, ei, mj + 1, ej)
-    ];
-
-    temp.sort((a, b) => a - b);
-    return temp[1];
+    ].sort((a, b) => a - b)[1];
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////
