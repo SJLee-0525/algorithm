@@ -4,15 +4,14 @@ const solution = (input) => {
     const N = Number(input[idx++]);
     const M = Number(input[idx++]);
 
-    const adjL = Array.from({ length: N + 1 }, () => new Object());
+    const adj = Array.from({ length: N + 1 }, () => Array(N + 1).fill(-1)); 
     for (let m = 0; m < M; m++) {
-        const [s, e, d] = input[idx++].split(' ');
-        const dist = Number(d);
+        const [s, e, d] = input[idx++].split(' ').map(Number);
 
-        if (!adjL[s][e]) {
-            adjL[s][e] = dist;
-        } else {
-            if (adjL[s][e] < dist) adjL[s][e] = dist;
+        if (s === e) continue;
+
+        if (adj[s][e] === -1 || adj[s][e] < d) {
+            adj[s][e] = d;
         }
     }
 
@@ -20,33 +19,23 @@ const solution = (input) => {
     visited[0] = true;
     
     let maxDist = -1;
-    
-    const dfs = (cur, dist = 0, count = 1) => {
-        if (cur === 0 && count === N + 2) {
-            maxDist = Math.max(maxDist, dist);
-            return;
-        }
-
-        for (const nextInfo of Object.entries(adjL[cur])) {
-            const [next, nextDist] = nextInfo.map(Number);
-
-            if (next === 0) {
-                if (count === N + 1) {
-                    dfs(0, dist + nextDist, count + 1);
-                }
-                continue;
-            }
-
-            if (visited[next]) continue;
+    const dfs = (cur, dist = 0, count = 0) => {
+        for (let next = 1; next <= N; next++) {
+            if (adj[cur][next] === -1 || visited[next]) continue;
 
             visited[next] = true;
-            dfs(next, dist + nextDist, count + 1);
+            dfs(next, dist + adj[cur][next], count + 1)
             visited[next] = false;
+        }
+
+        if (count === N && adj[cur][0] !== -1) {
+            const temp = dist + adj[cur][0];
+
+            if (maxDist < temp) maxDist = temp;
         }
     };
 
     dfs(0);
-
     console.log(maxDist);
 }
 
