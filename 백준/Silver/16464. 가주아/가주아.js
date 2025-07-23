@@ -1,11 +1,7 @@
 const solution = ([N, ...arr]) => {
     const res = [];
 
-    for (const K of arr) {    
-        const results = [];
-
-        res.push(findSequence(K) ? 'Gazua' : 'GoHanGang');
-    }
+    for (const K of arr) res.push( findSequence(K) ? 'Gazua' : 'GoHanGang' );
 
     console.log(res.join('\n'));
 }
