@@ -68,7 +68,7 @@ const solution = (input) => {
         }
     }
 
-    return (ex - sx + 1) * (ey - sy + 1);
+    return (BigInt(ex - sx + 1) * BigInt(ey - sy + 1)).toString();
 }
 
 // --------------------------------------------------------------------------------------
