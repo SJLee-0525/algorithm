@@ -3,8 +3,10 @@ const DJ = [0, 1, 0, -1];
 
 const solution = (input) => {
     const [N, M, R] = input[0].split(' ').map(Number);
+
     const originalArr = input.slice(1, N + 1).map(e => e.split(' ').map(Number));
     const visited = Array.from({ length: N }, () => Array(M).fill(0));
+
     const newArr = Array.from({ length: N }, () => Array(M).fill(null));
     const newVisited = Array.from({ length: N }, () => Array(M).fill(false));
 
@@ -31,6 +33,7 @@ const findStart = (si, sj, N, M, newR, originalArr, visited, newArr, newVisited)
             rk = (rk + 1) % 4;
             mi = ri + DI[rk]; mj = rj + DJ[rk];
         }
+
         ri = mi; rj = mj;
     }
 
@@ -45,6 +48,7 @@ const findStart = (si, sj, N, M, newR, originalArr, visited, newArr, newVisited)
             rk = (rk + 1) % 4;
             mi = ri + DI[rk]; mj = rj + DJ[rk];
         }
+
         ri = mi; rj = mj;
         newVisited[ri][rj] = true;
 
@@ -53,6 +57,7 @@ const findStart = (si, sj, N, M, newR, originalArr, visited, newArr, newVisited)
             ok = (ok + 1) % 4;
             omi = oi + DI[ok]; omj = oj + DJ[ok];
         }
+        
         oi = omi; oj = omj;
         visited[oi][oj] = 2;
     }
@@ -62,4 +67,5 @@ const findStart = (si, sj, N, M, newR, originalArr, visited, newArr, newVisited)
 
 const fs = require('fs');
 const input = fs.readFileSync('/dev/stdin').toString().trim().split('\n');
+
 solution(input);
