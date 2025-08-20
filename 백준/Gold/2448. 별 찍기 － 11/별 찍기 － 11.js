@@ -1,4 +1,5 @@
-// 설마 별 뒤에 쓸모 없는 공백 제거했다고 출력형식 잘못됐다고 하는거면 진짜 whsskwhssk 화날 예정임
+// 설마 별 뒤에 쓸모 없는 공백 제거했다고 출력형식 잘못됐다고 하는거면 진짜 whsskwhssk 화날 예정임;
+// 맞네 얼탱;
 
 const fs = require('fs');
 const N = Number(fs.readFileSync('/dev/stdin').toString().trim());
@@ -15,8 +16,8 @@ const solution = (N) => {
             return;
         }
 
-        const mi = si + depth / 2;
         const halfDepth = depth / 2;
+        const mi = si + halfDepth;
 
         func(si, mi - 1, sj + halfDepth, ej - halfDepth, halfDepth);
         func(mi, ei, sj, sj + depth - 1, halfDepth);
