@@ -12,6 +12,7 @@ const func = (N) => {
     let low = 0n;
     let high = 1n;
 
+    // 상한 찾기: 2배씩 키워 T(hi) > S 되는 지점까지
     while (high * (high + 1n) / 2n <= N) high <<= 1n;
 
     let ans = 0n;
