@@ -30,7 +30,7 @@ const solution = (input) => {
         // 빌딩 구조 변환
         const building = [
             Array(W + 2).fill(-3),
-            ...input.slice(idx, idx + H).map((l) => [-3, ...l.split('').map((e) => convert(e)), -3]),
+            ...input.slice(idx, idx + H).map((l) => [-3, ...l.trim().split('').map((e) => convert(e)), -3]),
             Array(W + 2).fill(-3),
         ];
         
@@ -73,7 +73,8 @@ const testcase = (W, H, building) => {
     }
 
     const next = new Array(); // 사ㅇ근이가 다음에 갈 위치 담을 임시 배열
-    
+    const newFire = new Array();      // 다음에 불 날 위치 담을 임시 배열
+
     while (true) {
         while (stack.length) {
             const [i, j, d] = stack.pop();  // 가기로 한 곳에서 하나씩 뽑아옴
@@ -93,9 +94,7 @@ const testcase = (W, H, building) => {
 
         if (!next.length) return 'IMPOSSIBLE';          // 다음에 갈 수 있는 곳이 없다면 불가능
         while (next.length) stack.push( next.pop() );   // 임시 배열에 있는 위치 다 스택에 추가
-        
-        const newFire = new Array();      // 다음에 불 날 위치 담을 임시 배열
-        
+                
         while (fire.length) {
             const [fi, fj] = fire.pop();  // 다음에 불 날 위치에서 좌표 뽑아옴
     
