@@ -6,16 +6,15 @@ const solution = (input) => {
 
     if (N <= 2) return 1;
 
-    const arr = Array.from({length: Math.floor(N / 2) + 1}, (_, i) => i + 1);
-
     let res = 1;
-    let cur = 1, left = 0, right = 0;
+    let cur = 1, left = 1, right = 1;
+    const std = Math.floor(N / 2) + 1
 
-    while (right < arr.length && left <= right) {
+    while (right <= std) {
         if (cur === N) res++;
 
-        if (cur < N) cur += arr[++right];
-        else cur -= arr[left++];
+        if (cur < N) cur += ++right;
+        else cur -= left++;
     }
 
     return res;
