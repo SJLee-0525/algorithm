@@ -12,10 +12,12 @@ const solution = (N) => {
 
         for (let right = 0; right < 100 - left; right++) {
             const rightCnt = info[Math.floor(right / 10)] + info[right % 10];
-            const calCnt = info[Math.floor((left + right) / 10)] + info[(left + right) % 10];
+
+            const cal = left + right;
+            const calCnt = info[Math.floor((cal) / 10)] + info[(cal) % 10];
 
             if (leftCnt + rightCnt + calCnt === STD) {
-                return `${left.toString().padStart(2, '0')}+${right.toString().padStart(2, '0')}=${(left + right).toString().padStart(2, '0')}`;
+                return `${left.toString().padStart(2, '0')}+${right.toString().padStart(2, '0')}=${cal.toString().padStart(2, '0')}`;
             };
         };
     };
