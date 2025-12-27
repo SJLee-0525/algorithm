@@ -41,7 +41,7 @@ const solution = (input) => {
                 break;
 
             default:
-                const ni = bi + MOVE[command][0], nj = bj + MOVE[command][1];
+                const [ni, nj] = [bi + MOVE[command][0], bj + MOVE[command][1]];
                 if (ni < 0 || N <= ni || nj < 0 || N <= nj || BOARD[ni][nj] !== '.') break;
 
                 [BOARD[bi][bj], BOARD[ni][nj]] = [BOARD[ni][nj], BOARD[bi][bj]];
