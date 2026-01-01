@@ -64,33 +64,42 @@ const solution = (input) => {
     };
 
     function dijkstra(start, end, budget) {
-        let maxCost = Infinity;
+        let best = Infinity;
 
-        const visited = Array(N + 1).fill(Infinity);
-        visited[start] = 0;
+        const visited = Array.from({ length: N + 1 }, () => Array(1001).fill(Infinity));
+        visited[start][0] = 0;
 
         const heap = new Heap();
-        heap.heappush([0, 0, start]);
+        heap.heappush([0, 0, start]); // [총비용, 현재까지 최대수치심, 노드]
 
         while (heap.heapsize()) {
-            const [curCost, curMaxCost, cur] = heap.heappop();
-            if (cur === end && maxCost > curMaxCost) maxCost = curMaxCost;
+            const [curCost, curMax, cur] = heap.heappop();
+
+            // 예산 초과 || 이미 찾은 정답보다 수치심이 크거나 같음 || 이 상태로 더 싸게 온 적 있음
+            if (curCost > budget || curMax >= best || curCost !== visited[cur][curMax]) continue;
+
+            if (cur === end) {
+                if (curMax < best) best = curMax;
+                continue;
+            };
 
             for (const [nextCost, next] of adjL[cur]) {
                 const tempCost = curCost + nextCost;
-                if (tempCost > budget || tempCost > visited[next]) continue;
+                if (tempCost > budget) continue;
 
-                let tempMaxCost;
-                if (curMaxCost < nextCost) tempMaxCost = nextCost;
-                else tempMaxCost = curMaxCost;
+                const tempMax = curMax < nextCost ? nextCost : curMax;
+                if (tempMax >= best) continue;
 
-                visited[next] = tempCost;
-                heap.heappush([tempCost, tempMaxCost, next]);
+                if (tempCost < visited[next][tempMax]) {
+                    visited[next][tempMax] = tempCost;
+                    heap.heappush([tempCost, tempMax, next]);
+                };
             };
         };
 
-        return visited[end] === Infinity ? -1 : maxCost;
+        return best === Infinity ? -1 : best;
     };
+
 
     console.log( dijkstra(A, B, C) );
 };
