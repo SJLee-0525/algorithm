@@ -60,14 +60,14 @@ class Heap {
 
 function solution(scoville, K) {
     const heap = new Heap();
-    for (const s of scoville) heap.heappush(BigInt(s));
+    for (const s of scoville) heap.heappush(s);
     
     let cnt = 0;
     
     function cook() {
         const l = heap.heappop();
         const h = heap.heappop();
-        heap.heappush(l + (h * 2n));
+        heap.heappush(l + (h * 2));
         
         cnt++;
     };
