@@ -1,0 +1,17 @@
+-- 코드를 입력하세요
+SELECT
+    CONCAT(
+        '/home/grep/src/',
+        G.BOARD_ID, '/',
+        G.FILE_ID, 
+        G.FILE_NAME,
+        G.FILE_EXT
+    ) AS FILE_PATH
+FROM USED_GOODS_FILE G
+WHERE BOARD_ID IN (
+    SELECT B.BOARD_ID FROM USED_GOODS_BOARD B
+    WHERE B.VIEWS = (
+        SELECT MAX(M.VIEWS) FROM USED_GOODS_BOARD M
+    )
+)
+ORDER BY G.FILE_ID DESC;
