@@ -1,0 +1,17 @@
+-- 코드를 작성해주세요
+SELECT 
+    O.ID,
+    CASE
+        WHEN RN = 1 THEN 'CRITICAL'
+        WHEN RN = 2 THEN 'HIGH'
+        WHEN RN = 3 THEN 'MEDIUM'
+        ELSE 'LOW'
+    END AS COLONY_NAME
+FROM (
+    SELECT 
+        I.ID,
+        NTILE(4) OVER (ORDER BY I.SIZE_OF_COLONY DESC) AS RN
+    FROM ECOLI_DATA I
+) O
+ORDER BY O.ID ASC;
+
