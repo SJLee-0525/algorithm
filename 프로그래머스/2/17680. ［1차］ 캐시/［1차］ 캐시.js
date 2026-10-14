@@ -68,7 +68,7 @@ class Queue {
         return ret;
     };
     
-    delete(node) {
+    detach(node) {
         if (node.prev !== null) node.prev.next = node.next;
         else this.front = node.next;
         
@@ -78,8 +78,25 @@ class Queue {
         node.next = null
         node.prev = null;
         
+        return;
+    };
+    
+    delete(node) {
+        this.detach(node);
         this.size--;
 
+        return;
+    };
+    
+    moveToTail(node) {
+        if (node === this.tail) return;
+        
+        this.detach(node);
+        
+        node.prev = this.tail;
+        this.tail.next = node;
+        this.tail = node;
+        
         return;
     };
 };
